@@ -251,16 +251,43 @@ App.Gomoku.prototype.check=function(){
 			y ++;
 		}
 	}
-	var count=0;
 	for(var x=0;x<this.size;x++){
 		for(var y=0;y<this.size;y++){
 			if(this.map[x][y]==0){
-				count++;
+				return 0;
 			}
 		}
 	}
-	if(count<=1){
-		return -1;
+	return -1;
+}
+App.Gomoku.prototype.copy=function() {
+	var ret=new App.Gomoku(this.size);
+	ret.map=JSON.parse(JSON.stringify(this.map));
+	ret.points=JSON.parse(JSON.stringify(this.points));
+	ret.id=this.id;
+	ret.win=this.win;
+	return ret;
+}
+App.Gomoku.prototype.getActions=function(){
+	var ret=[];
+	var isOk=function (x = 0, y = 0, board=App.Gomoku()) {
+		var size=board.size;
+		if (board.map[x][y] != 0) return false;
+		for (var dx = -2; dx < 3; dx++)
+			for (var dy = -2; dy < 3; dy++)
+				if (x + dx >= 0 && x + dx < size && y + dy >= 0 && y + dy < size)
+					if (board.map[x + dx][y + dy] != 0 ) return true;
+		return false;
 	}
-	return 0;
+	for(var x=0;x<this.size;x++){
+		for(var y=0;y<this.size;y++){
+			if(isOk(x,y,this)){
+				ret.push({x:x,y:y});
+			}
+		}
+	}
+	if(ret.length==0){
+		ret.push({x:7,y:7});
+	}
+	return ret;
 }

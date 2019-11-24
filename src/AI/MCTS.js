@@ -4,28 +4,8 @@ App.AI.AI=function(game=new App.Gomoku()){
 	this.game=game;
 	this.id=0;
 }
-App.AI.AI.prototype.isOk=function (x = 0, y = 0) {
-	var size=this.game.size;
-	if (this.game.map[x][y] != 0) return false;
-	for (var dx = -1; dx < 3; dx++)
-		for (var dy = -1; dy < 3; dy++)
-			if (x + dx >= 0 && x + dx < size && y + dy >= 0 && y + dy < size)
-				if (this.game.map[x + dx][y + dy] != 0 ) return true;
-	return false;
-};
-App.AI.AI.prototype.getActions=function(){
-	var ret=[];
-	for(var x=0;x<this.game.map.length;x++){
-		for(var y=0;y<this.game.map.length;y++){
-			if(this.isOk(x,y)){
-				ret.push({x:x,y:y});
-			}
-		}
-	}
-	return ret;
-}
 App.AI.AI.prototype.policy=function(turn=0){
-	var act=this.getActions();
+	var act=this.game.getActions();
 	for(var i=0,id=0;i<act.length;i++){
 		this.game.put(act[i].x,act[i].y);
 		id=this.game.check();
@@ -59,7 +39,7 @@ App.AI.AI.prototype.trial=function(){
 	return ret;
 }
 App.AI.AI.prototype.compute=function(){
-	var act=this.getActions();
+	var act=this.game.getActions();
 	var score=[1];
 	var epoch=250;
 	var best=Math.min(0,act.length-1);
