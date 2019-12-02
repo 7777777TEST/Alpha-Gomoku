@@ -44,14 +44,15 @@ App.AI.Node.prototype.mostVisited=function(){
 App.AI.AI=function(game=new App.Gomoku()){
 	this.game=game;
 	this.id=0;
-	this.maxTime=2000;
+	this.maxTime=60000;
+	this.maxIter=300000;
 }
 App.AI.AI.prototype.compute=function(){
 	var start=Date.now();
 	var limit=start+this.maxTime;
 	var visit=0;
 	var root=new App.AI.Node(this.game,null,null);
-	while(Date.now()<limit){
+	while(Date.now()<limit&&visit<this.maxIter){
 		var node=root;
 		var board=this.game.copy();
 		while(node.unchecked.length==0&&node.children.length>0){
