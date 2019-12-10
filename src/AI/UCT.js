@@ -78,6 +78,9 @@ App.AI.AI.prototype.compute=function(){
 			result*=0.9;
 			node=node.parent;
 		}
+		if(root.mostVisited().visit>50000){
+			break;
+		}
 	}
 	console.log(Math.floor(visit*1000/(Date.now()-start))+"/sec");
 	var best=root.mostVisited().act;
