@@ -14,9 +14,8 @@ App.Gomoku=function(size=8){
 			this.map[x][y]=0;
 		}
 	}
-	this.map[Math.floor(size/2)][Math.floor(size/2)]=1;
 	this.size=size;
-	this.id=2;
+	this.id=1;
 	this.win=0;
 	this.points=[];
 }
@@ -37,8 +36,7 @@ App.Gomoku.prototype.reset=function(size=0){
 			}
 		}
 	}
-	this.map[Math.floor(this.size/2)][Math.floor(this.size/2)]=1;
-	this.id=2;
+	this.id=1;
 	this.win=0;
 	this.points=[];
 }
@@ -273,15 +271,16 @@ App.Gomoku.prototype.getActions=function(){
 	var isOk=function (x = 0, y = 0, board=App.Gomoku()) {
 		var size=board.size;
 		if (board.map[x][y] != 0) return false;
-		for (var dx = -2; dx < 3; dx++)
-			for (var dy = -2; dy < 3; dy++)
+		const range=1;
+		for (var dx = -range; dx <= range; dx++)
+			for (var dy = -range; dy <= range; dy++)
 				if (x + dx >= 0 && x + dx < size && y + dy >= 0 && y + dy < size)
 					if (board.map[x + dx][y + dy] != 0 ) return true;
 		return false;
 	}
 	for(var x=0;x<this.size;x++){
 		for(var y=0;y<this.size;y++){
-			if(isOk(x,y,this)){
+			if(!this.map[x][y]){
 				ret.push({x:x,y:y});
 			}
 		}
@@ -290,4 +289,7 @@ App.Gomoku.prototype.getActions=function(){
 		ret.push({x:7,y:7});
 	}
 	return ret;
+}
+App.Gomoku.prototype.toString=function(){
+	return JSON.stringify(this.map);
 }

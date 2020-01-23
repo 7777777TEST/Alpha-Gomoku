@@ -37,7 +37,24 @@ App.draw=function(){
 	}
 }
 App.draw();
-App.locked=false;
+App.locked=true;
+App.compute=function(){
+	var start=Date.now();
+	App.ai.id=App.gomoku.id;
+	App.ai.compute(5);
+	console.log(Date.now()-start);
+	App.status.textContent="";
+	var id=App.gomoku.check();
+	App.draw();
+	App.locked=false;
+	if(id>0){
+		alert("player "+id+" win");
+		App.gomoku.win=id;
+	}else if(id==-1){
+		alert("DRAW");
+		App.gomoku.win=-1;
+	}
+}
 App.canvas.addEventListener("click",function(ev){
 	if(App.locked)return;
 	if(App.gomoku.win!=0){
@@ -64,21 +81,7 @@ App.canvas.addEventListener("click",function(ev){
 	}
 	App.status.textContent="Thinking..";
 	App.locked=true;
-	setTimeout(function(){
-		var start=Date.now();
-		App.ai.id=App.gomoku.id;
-		App.ai.compute(5);
-		console.log(Date.now()-start);
-		App.status.textContent="";
-		var id=App.gomoku.check();
-		App.draw();
-		App.locked=false;
-		if(id>0){
-			alert("player "+id+" win");
-			App.gomoku.win=id;
-		}else if(id==-1){
-			alert("DRAW");
-			App.gomoku.win=-1;
-		}
-	},100);
+	setTimeout(App.compute,100);
 });
+App.status.textContent="Thinking..";
+setTimeout(App.compute,100)

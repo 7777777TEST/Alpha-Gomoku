@@ -45,7 +45,7 @@ App.AI.AI=function(game=new App.Gomoku()){
 	this.game=game;
 	this.id=0;
 	this.maxTime=60000;
-	this.maxIter=300000;
+	this.maxIter=5000000;
 }
 App.AI.AI.prototype.compute=function(){
 	var start=Date.now();
