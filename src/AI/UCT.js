@@ -44,7 +44,7 @@ App.AI.Node.prototype.mostVisited=function(){
 App.AI.AI=function(game=new App.Gomoku()){
 	this.game=game;
 	this.id=0;
-	this.maxTime=40000;
+	this.maxTime=20000;
 	this.maxIter=5000000;
 }
 App.AI.AI.prototype.compute=function(){
