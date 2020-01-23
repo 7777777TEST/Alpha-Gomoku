@@ -78,7 +78,7 @@ App.AI.AI.prototype.compute=function(){
 			result*=0.9;
 			node=node.parent;
 		}
-		if(root.mostVisited().visit>50000){
+		if(root.mostVisited().visit>1000){
 			break;
 		}
 	}
