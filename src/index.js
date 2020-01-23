@@ -61,6 +61,9 @@ App.canvas.addEventListener("click",function(ev){
 		App.gomoku.reset();
 		alert("RESTART");
 		App.draw();
+		App.locked=true;
+		App.status.textContent="Thinking..";
+		setTimeout(App.compute,100)
 		return;
 	}
 	var mx=ev.clientX-ev.target.getBoundingClientRect().left-App.tilesize/2;
